@@ -1,12 +1,14 @@
 {
   "version": "0.1",
   "language": "en",
-  "words": ["bookcover", "deps", "typecheck", "workdir"],
+  "words": ["bookcover", "deps", "openbd", "typecheck", "workdir"],
   "ignoreWords": [
     "henken",
     "arkweid",
-    "nestjs",
     "lefthook",
+    "fastify",
+    "ghcr",
+    "buildx",
     "scripty",
     "hadolint",
     "yarnrc",
