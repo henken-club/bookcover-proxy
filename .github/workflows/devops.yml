@@ -1,0 +1,90 @@
+name: DevOps
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+
+jobs:
+  eslint:
+    name: ESLint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.4.2
+          cache: npm
+      - run: npm ci
+      - run: npm run lint:eslint
+
+  prettier:
+    name: Prettier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.4.2
+          cache: npm
+      - run: npm ci
+      - run: npm run lint:prettier
+
+  cspell:
+    name: cSpell
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.4.2
+          cache: npm
+      - run: npm ci
+      - run: npm run lint:cspell
+
+  typecheck:
+    name: Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.4.2
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+
+  test-unit:
+    name: Unit Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.4.2
+          cache: npm
+      - run: npm ci
+      - run: npm run test:unit
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.4.2
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+
+  hadolint:
+    name: hadolint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hadolint/hadolint-action@v1.5.0
+        with:
+          dockerfile: Dockerfile

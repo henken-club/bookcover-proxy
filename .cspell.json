@@ -1,0 +1,25 @@
+{
+  "version": "0.1",
+  "language": "en",
+  "words": ["bookcover", "deps", "openbd", "typecheck", "workdir"],
+  "ignoreWords": [
+    "henken",
+    "arkweid",
+    "lefthook",
+    "fastify",
+    "ghcr",
+    "buildx",
+    "scripty",
+    "hadolint",
+    "yarnrc",
+    "prettierrc"
+  ],
+  "ignorePaths": [
+    ".vscode/extensions.json",
+    "coverage/**",
+    "dist/**",
+    "node_modules/**",
+    ".cspell.json",
+    "package-lock.json"
+  ]
+}
