@@ -1,10 +1,22 @@
-import {NestFactory} from '@nestjs/core';
+import fastify from 'fastify';
 
-import {AppModule} from './app.module';
+import {openbd} from './openbd';
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+const server = fastify({logger: true});
+
+server.get<{Params: {isbn: string}}>('/isbn/:isbn', async (request, reply) => {
+  const {isbn} = request.params;
+
+  const source = await Promise.any([openbd(isbn)]).catch(() => null);
+  if (!source) reply.callNotFound();
+  return source;
+});
+
+server.listen(
   // eslint-disable-next-line no-process-env
-  await app.listen(process.env.PORT || 8080);
-}
-bootstrap();
+  process.env.PORT!,
+  (error, address) => {
+    if (error) throw error;
+    server.log.info(`server listening on ${address}`);
+  },
+);
