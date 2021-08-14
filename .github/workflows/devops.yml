@@ -78,7 +78,6 @@ jobs:
           node-version: 16.4.2
           cache: yarn
       - run: yarn install --frozen-lockfile
-      - run: yarn prisma generate
       - run: yarn run build
 
   hadolint:
