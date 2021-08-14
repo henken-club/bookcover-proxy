@@ -2,9 +2,8 @@
 FROM node:16.4.2-slim AS deps
 WORKDIR /app
 
-COPY package.json yarn.lock .yarnrc ./
-COPY .yarn ./.yarn
-RUN yarn install --frozen-lockfile && yarn cache clean
+COPY package.json package-lock.json ./
+RUN npm ci
 
 # production only dependencies
 FROM deps AS deps-production
@@ -16,17 +15,19 @@ RUN npm prune --production
 FROM deps AS builder
 WORKDIR /app
 
-COPY tsconfig.json tsconfig.build.json nest-cli.json ./
+COPY tsconfig.json ./
 COPY src ./src
-RUN yarn run build
+RUN npm run build
 
 # runner
-FROM deps-production AS runner
+FROM node:16.4.2-alpine AS runner
 WORKDIR /app
 
-ENV PORT 4000
+ENV PORT 8080
 ENV NODE_ENV production
 
+COPY --from=deps-production /app/package.json ./package.json
+COPY --from=deps-production /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 
 EXPOSE $PORT

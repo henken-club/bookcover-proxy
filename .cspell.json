@@ -20,7 +20,6 @@
     "dist/**",
     "node_modules/**",
     ".cspell.json",
-    ".yarnrc",
-    "yarn.lock"
+    "package-lock.json"
   ]
 }
